@@ -1,14 +1,18 @@
 package VISUAL;
 
-import javax.swing.JFrame;
+import org.apache.commons.dbcp2.BasicDataSource;
 
 public class PRINCIPAL extends javax.swing.JFrame {
+    
+    public static BasicDataSource dataSource = null;
+    public static POOLCONEXIONES conexiones;
 
     public PRINCIPAL() {
         initComponents();
         this.PlOGO.setBackgroung("IMAGENES/LOGOZURICH.png");       
         butBuscar.setBackgroung("IMAGENES/ICONOS/lupa.png");
-        
+        conexiones = new POOLCONEXIONES();
+        dataSource = conexiones.hacerpool();
         
     }
     
@@ -193,7 +197,6 @@ public class PRINCIPAL extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         txtSexo = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -285,8 +288,15 @@ public class PRINCIPAL extends javax.swing.JFrame {
         jLabel15.setText("EXPOSICIÓN A FACTORES CONTAMINANTES");
 
         cbBaja.setText("Baja");
+        cbBaja.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbBajaItemStateChanged(evt);
+            }
+        });
 
         jLabel17.setText("Fecha de baja");
+
+        dcBaja.setEnabled(false);
 
         cbRuido.setText("Ruido");
 
@@ -462,7 +472,7 @@ public class PRINCIPAL extends javax.swing.JFrame {
         jScrollPane8.setViewportView(jTextArea6);
 
         jLabel65.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel65.setText("CONTACTOS DE MERGENCIA");
+        jLabel65.setText("CONTACTOS DE EMERGENCIA");
 
         jButton3.setText("Guardar");
 
@@ -726,47 +736,49 @@ public class PRINCIPAL extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(68, 68, 68)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel36)
-                                    .addComponent(jLabel35)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(220, 220, 220)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel36)
+                                            .addComponent(jLabel35)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(rbActividadSi)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(rbActividadNo))
+                                                .addGap(220, 220, 220)
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                                        .addComponent(rbActividadSi)
+                                                        .addGap(18, 18, 18)
+                                                        .addComponent(rbActividadNo))
+                                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                                        .addComponent(rbAlcoholSi)
+                                                        .addGap(18, 18, 18)
+                                                        .addComponent(rbAlcoholNo))
+                                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                                        .addComponent(rbFumaSi)
+                                                        .addGap(18, 18, 18)
+                                                        .addComponent(rbFumaNo)))))
+                                        .addGap(145, 145, 145)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel38)
+                                            .addComponent(jLabel39)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(rbAlcoholSi)
+                                                .addComponent(jLabel40)
                                                 .addGap(18, 18, 18)
-                                                .addComponent(rbAlcoholNo))))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel37)
-                                        .addGap(111, 111, 111)
-                                        .addComponent(rbFumaSi)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(rbFumaNo)))
-                                .addGap(145, 145, 145)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel38)
-                                    .addComponent(jLabel39)))
+                                                .addComponent(txtDrogasTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jLabel37)
+                                            .addGap(390, 390, 390))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                            .addGap(480, 480, 480)
+                                            .addComponent(rbDrogasSi)
+                                            .addGap(55, 55, 55)
+                                            .addComponent(rbDrogasNo)
+                                            .addGap(93, 93, 93)))))
                             .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 829, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(44, 44, 44))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(548, 548, 548)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(rbDrogasSi)
-                                .addGap(55, 55, 55)
-                                .addComponent(rbDrogasNo))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jButton3)
-                                    .addGap(29, 29, 29))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel40)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(txtDrogasTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(130, 130, 130)))))))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton3)
+                        .addGap(57, 57, 57))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -923,15 +935,15 @@ public class PRINCIPAL extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel37)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(rbFumaSi)
-                        .addComponent(rbFumaNo)
                         .addComponent(rbDrogasSi)
-                        .addComponent(rbDrogasNo)))
+                        .addComponent(rbDrogasNo)
+                        .addComponent(rbFumaNo)
+                        .addComponent(rbFumaSi)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtDrogasTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel40))
-                .addGap(18, 18, 18)
+                .addGap(11, 11, 11)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel41)
                     .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1067,8 +1079,6 @@ public class PRINCIPAL extends javax.swing.JFrame {
 
         txtSexo.setText("-");
 
-        jButton1.setText("Guardar");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -1097,8 +1107,7 @@ public class PRINCIPAL extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(jButton2))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3)
@@ -1117,9 +1126,7 @@ public class PRINCIPAL extends javax.swing.JFrame {
                         .addComponent(jLabel16)
                         .addComponent(txtNoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(butBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton2)
-                        .addComponent(jButton1)))
+                    .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
@@ -1141,19 +1148,23 @@ public class PRINCIPAL extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
 
-    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-        NUEVOREGISTRO ventanaNueva= new NUEVOREGISTRO();
-        ventanaNueva.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        ventanaNueva.setVisible(true);
-    }//GEN-LAST:event_jButton2MouseClicked
+    private void txtDrogasTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDrogasTipoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDrogasTipoActionPerformed
+
+    private void cbBajaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbBajaItemStateChanged
+        dcBaja.setEnabled(cbBaja.isSelected());
+    }//GEN-LAST:event_cbBajaItemStateChanged
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void txtDrogasTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDrogasTipoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDrogasTipoActionPerformed
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        NUEVOREGISTRO ventanaNueva= new NUEVOREGISTRO();
+        ventanaNueva.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        ventanaNueva.setVisible(true);
+    }//GEN-LAST:event_jButton2MouseClicked
 
     
     public static void main(String args[]) {
@@ -1200,7 +1211,6 @@ public class PRINCIPAL extends javax.swing.JFrame {
     private javax.swing.JCheckBox cbRuido;
     private com.toedter.calendar.JDateChooser dcBaja;
     private com.toedter.calendar.JDateChooser dcIngreso;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JCheckBox jCheckBox10;

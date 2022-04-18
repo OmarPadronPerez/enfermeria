@@ -2,8 +2,9 @@ package CLASES;
 
 import java.util.Date;
 
-public class PERSONA {
+public class TRABAJADOR {
     /*datos de identificaion*/
+    int id=-1;
     String apellido1=null;
     String apellido2=null;
     String nombre=null;
@@ -14,12 +15,12 @@ public class PERSONA {
     Date fecNaci=null;
     String estadoCivil=null;
     String escolaridad=null;
-    int telefono=-1;
+    String telefono=null;
     
     /*Descripcion de cargo*/
     Date fechaIngreso=null;
     String area=null;
-    boolean baja=false;
+    boolean activo=false;
     Date fechaBaja=null;
     
     /*contaminantes*/
@@ -87,15 +88,23 @@ public class PERSONA {
     String medicacion=null;
     String contactos=null;
 
-    public PERSONA() {
+    public TRABAJADOR() {
     }
 
-    public boolean isBaja() {
-        return baja;
+    public int getId() {
+        return id;
     }
 
-    public void setBaja(boolean baja) {
-        this.baja = baja;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
     
     public String getApellido1() {
@@ -564,14 +573,14 @@ public class PERSONA {
         this.escolaridad = escolaridad;
     }
 
-    public int getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(int telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-
+    
     public boolean isTemperaturas() {
         return temperaturas;
     }
@@ -652,6 +661,4 @@ public class PERSONA {
         this.contactos = contactos;
     }
 
-    
-    
 }
