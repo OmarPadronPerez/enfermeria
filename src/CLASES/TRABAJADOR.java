@@ -1,5 +1,6 @@
 package CLASES;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class TRABAJADOR {
@@ -48,6 +49,8 @@ public class TRABAJADOR {
     String transmitiblesObser=null;
     int psiquiatrica=-1;
     String psiquiatricaObser=null;
+    int quirurgicas=-1;
+    String quirurgicasObs=null;
     int digestiva=-1;
     String digestivaObser=null;
     int autoinmune=-1;
@@ -56,6 +59,8 @@ public class TRABAJADOR {
     String renalObser=null;
     int oncologico=-1;
     String oncologicoObser=null;
+    int enfSexuales=-1;
+    String enfSexualesObser=null;
     
     /**habitos*/
     boolean actividad=false;
@@ -71,8 +76,12 @@ public class TRABAJADOR {
     float peso=-1;
     float imc=-1;
     float pAbdominal=-1;
-    int satOxigeno=-1;
-    float glicemina=-1;
+    float fc=-1;
+    float fr=-1;
+    float oi=-1;
+    float od=-1;
+
+    
     
     /**Exploración física*/
     String pielCabello=null;
@@ -81,16 +90,82 @@ public class TRABAJADOR {
     String cardiovascular=null;
     String digestivo=null;
     String genitourinario =null;
-    String marcha=null;
-    String columna=null;
+    String musculo=null;
+    String sisNervioso=null;
+    
     String valoracioMedica=null;
     String vacunacion=null;
     String medicacion=null;
     String contactos=null;
+    
+    ArrayList<CONSULTA> consultas=null;
 
     public TRABAJADOR() {
     }
 
+    public ArrayList<CONSULTA> getConsultas() {
+        return consultas;
+    }
+
+    public void setConsultas(ArrayList<CONSULTA> consultas) {
+        this.consultas = consultas;
+    }
+
+    public String getSisNervioso() {
+        return sisNervioso;
+    }
+
+    public void setSisNervioso(String sisNervioso) {
+        this.sisNervioso = sisNervioso;
+    }
+
+    public int getEnfSexuales() {
+        return enfSexuales;
+    }
+
+    public void setEnfSexuales(int enfSexuales) {
+        this.enfSexuales = enfSexuales;
+    }
+
+    public String getEnfSexualesObser() {
+        return enfSexualesObser;
+    }
+
+    public void setEnfSexualesObser(String enfSexualesObser) {
+        this.enfSexualesObser = enfSexualesObser;
+    }
+
+    public float getOi() {
+        return oi;
+    }
+
+    public void setOi(float oi) {
+        this.oi = oi;
+    }
+    
+    public float getOd() {
+        return od;
+    }
+
+    public void setOd(float od) {
+        this.od = od;
+    }
+    public int getQuirurgicas() {
+        return quirurgicas;
+    }
+
+    public void setQuirurgicas(int quirurgicas) {
+        this.quirurgicas = quirurgicas;
+    }
+
+    public String getQuirurgicasObs() {
+        return quirurgicasObs;
+    }
+
+    public void setQuirurgicasObs(String quirurgicasObs) {
+        this.quirurgicasObs = quirurgicasObs;
+    }    
+    
     public int getId() {
         return id;
     }
@@ -517,20 +592,20 @@ public class TRABAJADOR {
         this.pAbdominal = pAbdominal;
     }
 
-    public int getSatOxigeno() {
-        return satOxigeno;
+    public float getFc() {
+        return fc;
     }
 
-    public void setSatOxigeno(int satOxigeno) {
-        this.satOxigeno = satOxigeno;
+    public void setFc(float fc) {
+        this.fc = fc;
     }
 
-    public float getGlicemina() {
-        return glicemina;
+    public float getFr() {
+        return fr;
     }
 
-    public void setGlicemina(float glicemina) {
-        this.glicemina = glicemina;
+    public void setFr(float fr) {
+        this.fr = fr;
     }
 
     public String getPielCabello() {
@@ -613,22 +688,14 @@ public class TRABAJADOR {
         this.genitourinario = genitourinario;
     }
 
-    public String getMarcha() {
-        return marcha;
+    public String getMusculo() {
+        return musculo;
     }
 
-    public void setMarcha(String marcha) {
-        this.marcha = marcha;
+    public void setMusculo(String musculo) {
+        this.musculo = musculo;
     }
-
-    public String getColumna() {
-        return columna;
-    }
-
-    public void setColumna(String columna) {
-        this.columna = columna;
-    }
-
+    
     public String getValoracioMedica() {
         return valoracioMedica;
     }
@@ -660,5 +727,5 @@ public class TRABAJADOR {
     public void setContactos(String contactos) {
         this.contactos = contactos;
     }
-
+    
 }
