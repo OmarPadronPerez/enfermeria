@@ -3,6 +3,7 @@ package VISUAL;
 import CLASES.TRABAJADOR;
 import SQL.SQLRegistros;
 import static auxiliar.auxiliares.calcularIMC;
+import java.util.Date;
 import javax.swing.JCheckBox;
 import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.JTextField;
@@ -23,98 +24,101 @@ public class NUEVOREGISTRO extends javax.swing.JFrame {
     }
     
     public TRABAJADOR crearObjeto(){
-        TRABAJADOR t=new TRABAJADOR();
-        //datos de empleado
-        t.setId(Integer.parseInt(txtId.getText()));
-        t.setNombre(txtNombre.getText().toUpperCase());
-        t.setApellido1(txtApellido1.getText().toUpperCase());
-        t.setApellido2(txtApellido2.getText().toUpperCase());
-        t.setFechaIngreso(dcIngreso.getDate());
-        t.setArea(txtArea.getText().toUpperCase().toUpperCase());
-        t.setActivo(!cbBaja.isSelected());
-        if(!cbBaja.isSelected()){
-            t.setFechaBaja(null);
-        }else{
-            t.setFechaBaja(dcBaja.getDate());
+        TRABAJADOR t=null;
+        if(validarDatosEmpleado()){
+            t=new TRABAJADOR();
+            //datos de empleado
+            t.setId(Integer.parseInt(txtId.getText()));
+            t.setNombre(txtNombre.getText().toUpperCase());
+            t.setApellido1(txtApellido1.getText().toUpperCase());
+            t.setApellido2(txtApellido2.getText().toUpperCase());
+            t.setFechaIngreso(dcIngreso.getDate());
+            t.setArea(txtArea.getText().toUpperCase().toUpperCase());
+            t.setActivo(!cbBaja.isSelected());
+            if(!cbBaja.isSelected()){
+                t.setFechaBaja(null);
+            }else{
+                t.setFechaBaja(dcBaja.getDate());
+            }
+            //datos generales
+            t.setSexo(cbSexo.getSelectedItem().toString().toUpperCase());
+            t.setTelefono(txtTelefono.getText());
+            t.setLugNaci(txtLugNacimiento.getText().toUpperCase());
+            t.setFecNaci(dcNacimiento.getDate());
+            t.setEscolaridad(cbEscolaridad.getSelectedItem().toString());
+            t.setEstadoCivil(cbCivil.getSelectedItem().toString());
+            //datos contaminantes
+            t.setRuido(cbRuido.isSelected());
+            t.setPolvo(cbPolvo.isSelected());
+            t.setGases(cbGases.isSelected());
+            t.setBiologico(cbBiologicos.isSelected());
+            t.setHumo(cbHumo.isSelected());
+            t.setVapores(bcVapores.isSelected());
+            t.setSolventes(cbSolventes.isSelected());
+            t.setMetales(cbMetales.isSelected());
+            t.setTemperaturas(cbTemperaturas.isSelected());
+            t.setMovimiento(cbMovimientos.isSelected());
+            t.setPosturas(cbPosturas.isSelected());
+            t.setCargas(cbCarga.isSelected());
+            //antecedentes Heredofamiliares
+            t.setRespiratorio(antecedentes(cbRespiratorias1,cbRespiratorias2));
+            t.setRespiratorioObser(txtRespiratorias.getText().toUpperCase());
+            t.setHematologico(antecedentes(cbHematologicos1,cbHematologicos2));
+            t.setHematologicoObser(txtHematologicos.getText().toUpperCase());
+            t.setEnfSexuales(antecedentes(cbSexual1,cbSexual2));
+            t.setEnfSexualesObser(txtSexual.getText().toUpperCase());
+            t.setNeurologico(antecedentes(cbNeurologico1,cbNeurologico2));
+            t.setNeurologicoObser(txtNeurologico.getText().toUpperCase());
+            t.setQuirurgicas(antecedentes(cbQuirurgicas1,cbQuirurgicas2));
+            t.setQuirurgicasObs(txtQuirurgicas.getText().toUpperCase());
+            t.setTransmitibles(antecedentes(cbTransmitibles1,cbTransmitibles2));
+            t.setTransmitiblesObser(txtTransmitibles.getText().toUpperCase());
+            t.setPsiquiatrica(antecedentes(cbPsiquiatricas1,cbPsiquiatricas2));
+            t.setPsiquiatricaObser(txtPsiquiatricas.getText().toUpperCase());
+            t.setDigestiva(antecedentes(cbDigestivas1,cbDigestivas2));
+            t.setDigestivaObser(txtDigestivas.getText().toUpperCase());
+            t.setAutoinmune(antecedentes(cbAutoinmunes1,cbAutoinmunes2));
+            t.setAutoinmuneObser(txtAutoinmunes.getText().toUpperCase());
+            t.setRenal(antecedentes(cbRenales1,cbRenales2));
+            t.setRenalObser(txtRenales.getText().toUpperCase());
+            t.setOncologico(antecedentes(cbOncologicos1,cbOncologicos2));
+            t.setOncologicoObser(txtOncologicos.getText().toUpperCase());
+            //Habitos
+            t.setActividad(rbActividadSi.isSelected());
+            t.setAlcohol(rbAlcoholSi.isSelected());
+            t.setFumar(rbFumaSi.isSelected());
+            t.setDrogas(rbDrogasSi.isSelected());
+            if(!rbDrogasSi.isSelected()){
+                t.setTipoDorga(null);
+            }else{
+                t.setTipoDorga(txtDrogasTipo.getText().toUpperCase());
+            }
+
+            //evaluacion medica
+            t.setClinico(txtExamenClinico.getText().toUpperCase());
+            t.setTalla(validarFloat(txtTalla));
+            t.setPeso(validarFloat(txtPeso));
+            t.setFc(validarFloat(txtFr));
+            t.setFr(validarFloat(txtFc));
+            t.setpAbdominal(validarFloat(txtpAbd));
+            t.setOi(validarFloat(txtOi));
+            t.setOd(validarFloat(txtOd));
+
+            t.setSnellen(txtSnellen.getText().toUpperCase());
+            //exploracion fisica
+            t.setPielCabello(txtCabello.getText().toUpperCase());
+            t.setOjosAnexos(txtOjos.getText().toUpperCase());
+            t.setAparatoRespiratorio(txtRespiratorio.getText().toUpperCase());
+            t.setCardiovascular(txtCardio.getText().toUpperCase());
+            t.setDigestivo(txtDigestivo.getText().toUpperCase());
+            t.setGenitourinario(txtgenito.getText().toUpperCase());
+            t.setMusculo(txtMusculo.getText().toUpperCase());
+            t.setSisNervioso(txtSisNervioso.getText());
+            t.setValoracioMedica(txtValoracion.getText().toUpperCase());
+            t.setVacunacion(txtVacucnacion.getText().toUpperCase());
+            t.setMedicacion(txtMedicacion.getText().toUpperCase());
+            t.setContactos(txtContactos.getText().toUpperCase());
         }
-        //datos generales
-        t.setSexo(cbSexo.getSelectedItem().toString().toUpperCase());
-        t.setTelefono(txtTelefono.getText());
-        t.setLugNaci(txtLugNacimiento.getText().toUpperCase());
-        t.setFecNaci(dcNacimiento.getDate());
-        t.setEscolaridad(cbEscolaridad.getSelectedItem().toString());
-        t.setEstadoCivil(cbCivil.getSelectedItem().toString());
-        //datos contaminantes
-        t.setRuido(cbRuido.isSelected());
-        t.setPolvo(cbPolvo.isSelected());
-        t.setGases(cbGases.isSelected());
-        t.setBiologico(cbBiologicos.isSelected());
-        t.setHumo(cbHumo.isSelected());
-        t.setVapores(bcVapores.isSelected());
-        t.setSolventes(cbSolventes.isSelected());
-        t.setMetales(cbMetales.isSelected());
-        t.setTemperaturas(cbTemperaturas.isSelected());
-        t.setMovimiento(cbMovimientos.isSelected());
-        t.setPosturas(cbPosturas.isSelected());
-        t.setCargas(cbCarga.isSelected());
-        //antecedentes Heredofamiliares
-        t.setRespiratorio(antecedentes(cbRespiratorias1,cbRespiratorias2));
-        t.setRespiratorioObser(txtRespiratorias.getText().toUpperCase());
-        t.setHematologico(antecedentes(cbHematologicos1,cbHematologicos2));
-        t.setHematologicoObser(txtHematologicos.getText().toUpperCase());
-        t.setEnfSexuales(antecedentes(cbSexual1,cbSexual2));
-        t.setEnfSexualesObser(txtSexual.getText().toUpperCase());
-        t.setNeurologico(antecedentes(cbNeurologico1,cbNeurologico2));
-        t.setNeurologicoObser(txtNeurologico.getText().toUpperCase());
-        t.setQuirurgicas(antecedentes(cbQuirurgicas1,cbQuirurgicas2));
-        t.setQuirurgicasObs(txtQuirurgicas.getText().toUpperCase());
-        t.setTransmitibles(antecedentes(cbTransmitibles1,cbTransmitibles2));
-        t.setTransmitiblesObser(txtTransmitibles.getText().toUpperCase());
-        t.setPsiquiatrica(antecedentes(cbPsiquiatricas1,cbPsiquiatricas2));
-        t.setPsiquiatricaObser(txtPsiquiatricas.getText().toUpperCase());
-        t.setDigestiva(antecedentes(cbDigestivas1,cbDigestivas2));
-        t.setDigestivaObser(txtDigestivas.getText().toUpperCase());
-        t.setAutoinmune(antecedentes(cbAutoinmunes1,cbAutoinmunes2));
-        t.setAutoinmuneObser(txtAutoinmunes.getText().toUpperCase());
-        t.setRenal(antecedentes(cbRenales1,cbRenales2));
-        t.setRenalObser(txtRenales.getText().toUpperCase());
-        t.setOncologico(antecedentes(cbOncologicos1,cbOncologicos2));
-        t.setOncologicoObser(txtOncologicos.getText().toUpperCase());
-        //Habitos
-        t.setActividad(rbActividadSi.isSelected());
-        t.setAlcohol(rbAlcoholSi.isSelected());
-        t.setFumar(rbFumaSi.isSelected());
-        t.setDrogas(rbDrogasSi.isSelected());
-        if(!rbDrogasSi.isSelected()){
-            t.setTipoDorga(null);
-        }else{
-            t.setTipoDorga(txtDrogasTipo.getText().toUpperCase());
-        }
-        
-        //evaluacion medica
-        t.setClinico(txtExamenClinico.getText().toUpperCase());
-        t.setTalla(validarFloat(txtTalla));
-        t.setPeso(validarFloat(txtPeso));
-        t.setFc(validarFloat(txtFr));
-        t.setFr(validarFloat(txtFc));
-        t.setpAbdominal(validarFloat(txtpAbd));
-        t.setOi(validarFloat(txtOi));
-        t.setOd(validarFloat(txtOd));
-        
-        t.setSnellen(txtSnellen.getText().toUpperCase());
-        //exploracion fisica
-        t.setPielCabello(txtCabello.getText().toUpperCase());
-        t.setOjosAnexos(txtOjos.getText().toUpperCase());
-        t.setAparatoRespiratorio(txtRespiratorio.getText().toUpperCase());
-        t.setCardiovascular(txtCardio.getText().toUpperCase());
-        t.setDigestivo(txtDigestivo.getText().toUpperCase());
-        t.setGenitourinario(txtgenito.getText().toUpperCase());
-        t.setMusculo(txtMusculo.getText().toUpperCase());
-        t.setSisNervioso(txtSisNervioso.getText());
-        t.setValoracioMedica(txtValoracion.getText().toUpperCase());
-        t.setVacunacion(txtVacucnacion.getText().toUpperCase());
-        t.setMedicacion(txtMedicacion.getText().toUpperCase());
-        t.setContactos(txtContactos.getText().toUpperCase());
         return t;
     }
     
@@ -159,6 +163,55 @@ public class NUEVOREGISTRO extends javax.swing.JFrame {
                 retorno=-1;
             }
             return retorno;
+        }
+        public boolean validarDatosEmpleado(){
+            String error="";
+            txtApellido1.setText(txtApellido1.getText().replaceAll("^\\s*", ""));
+            txtApellido2.setText(txtApellido2.getText().replaceAll("^\\s*", ""));
+            txtNombre.setText(txtNombre.getText().replaceAll("^\\s*", ""));
+            txtId.setText(txtId.getText().replaceAll("^\\s*", ""));
+            txtLugNacimiento.setText(txtLugNacimiento.getText().replaceAll("^\\s*", ""));
+            txtTelefono.setText(txtTelefono.getText().replaceAll("^\\s*", ""));
+            txtArea.setText(txtArea.getText().replaceAll("^\\s*", ""));
+            
+            try{
+                int id=Integer.valueOf(txtId.getText());
+            }catch(NumberFormatException e){
+                error+="\nId no valido";
+            }
+            if(txtApellido1.getText().length()<1)
+                error+="\nApellido 1 no valido";
+            if(txtApellido2.getText().length()<1)
+                error+="\nApellido 2 no valido";
+            if(txtNombre.getText().length()<1)
+                error+="\nNombre no valido";
+            try{
+                double tel=Double.valueOf(txtTelefono.getText());
+            }catch(NumberFormatException e){
+                error+="\ntelefono no valido";
+            }
+            if(txtTelefono.getText().length()==10)
+                error+="\nTelefono a 10 digitos";
+            if(dcNacimiento.getDate()==null)
+                error+="\nFecha de nacimiento no valida";
+            
+            if(dcIngreso.getDate()==null)
+                error+="\nFecha de ingreso no valida";
+            if(txtLugNacimiento.getText().length()<1)
+                error+="\nLugar de nacimiento no valido";
+            if(txtArea.getText().length()<1)
+                error+="\nArea de trabajo no valida";
+            if(cbBaja.isSelected()){
+                if(dcBaja.getDate()==null)
+                error+="\nFecha de baja no valida";
+            }
+            
+            if(error.length()==0){return true;}
+            else {
+                showMessageDialog(null, "Error "+error);
+                return false;
+            }
+            
         }
         
     
@@ -825,8 +878,11 @@ public class NUEVOREGISTRO extends javax.swing.JFrame {
                                         .addGap(58, 58, 58)
                                         .addComponent(jLabel62)
                                         .addGap(134, 134, 134)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel63)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel63)
+                                                .addGap(144, 144, 144)
+                                                .addComponent(jLabel1))
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addComponent(jLabel5)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -841,13 +897,8 @@ public class NUEVOREGISTRO extends javax.swing.JFrame {
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(dcNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(cbCivil, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addGap(50, 50, 50)
-                                                .addComponent(jLabel6))
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addGap(216, 216, 216)
-                                                .addComponent(jLabel1)))))
+                                        .addGap(50, 50, 50)
+                                        .addComponent(jLabel6)))
                                 .addGap(80, 80, 80)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
@@ -1359,21 +1410,22 @@ public class NUEVOREGISTRO extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         SQLRegistros mod=new SQLRegistros();
         TRABAJADOR  t=crearObjeto();
-        SQLRegistros sql=new SQLRegistros();
         boolean continuar=false;
-        continuar=sql.NuevoEmpleado(t);
-        if(continuar){
-            continuar=mod.guardar_datos_medicos(t);
+        if(t!=null){
+            continuar=mod.NuevoEmpleado(t);
             if(continuar){
-                showMessageDialog(null, "Guardado");
-                this.dispose();
+                continuar=mod.guardar_datos_medicos(t);
+                if(continuar){
+                    showMessageDialog(null, "Guardado");
+                    this.dispose();
+                }else{
+                    showMessageDialog(null, "Falla al guardar");
+                }
             }else{
-                showMessageDialog(null, "Falla al guardar");
+                showMessageDialog(null, "empleado ya existente");
             }
-        }else{
-            showMessageDialog(null, "empleado ya existente");
         }
-        
+            
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtPesoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesoKeyReleased

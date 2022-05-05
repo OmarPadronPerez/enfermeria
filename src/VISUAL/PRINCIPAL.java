@@ -200,6 +200,17 @@ public class PRINCIPAL extends javax.swing.JFrame {
             }
             return retorno;
         }
+        
+        public boolean validarDatosConsulta(){
+            txtSintomas.setText(txtSintomas.getText().replaceAll("^\\s*", ""));
+            txtDiagnostico.setText(txtDiagnostico.getText().replaceAll("^\\s*", ""));
+            if(txtSintomas.getText().length()>0&&
+                    txtDiagnostico.getText().length()>0)
+                return true;
+            
+            else return false;
+        }
+        
     
     
     public void llenarCampos(TRABAJADOR t){
@@ -539,6 +550,19 @@ public class PRINCIPAL extends javax.swing.JFrame {
         }catch(Exception e){
             
         }
+    }
+    public boolean validaciones(){
+        String error="";
+        if(cbBaja.isSelected()){
+             if(dcBaja.getDate()==null)
+                error+="\nFecha de baja no valida";
+        }
+        
+        if(error.length()==0){return true;}
+            else {
+                showMessageDialog(null, "Error "+error);
+                return false;
+            }
     }
     
 
@@ -2022,13 +2046,18 @@ public class PRINCIPAL extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNoEmpleadoKeyReleased
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        actualizarObjeto();
-        SQLRegistros mod=new SQLRegistros();
-        if(mod.actualizar_datos_medicos(trabajador)){
-            showMessageDialog(null, "Guardado");
-        }else{
-            showMessageDialog(null, "falla al guardar");
+        if(validaciones()){
+            actualizarObjeto();
+            SQLRegistros mod=new SQLRegistros();
+            if(mod.actualizar_empleado(trabajador))
+                if(mod.actualizar_datos_medicos(trabajador)){
+                    showMessageDialog(null, "Guardado");
+                }else{
+                    showMessageDialog(null, "falla al guardar");
+                }
         }
+        
+        
         
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -2041,12 +2070,26 @@ public class PRINCIPAL extends javax.swing.JFrame {
     }//GEN-LAST:event_cbHospitalizaciónActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        for(int x=0;x<jTable1.getColumnCount();x++){
+        /*for(int x=0;x<jTable1.getColumnCount();x++){
         System.out.println(x+" "+jTable1.getColumn(jTable1.getColumnName(x)).getWidth());
-        }
-        /*CONSULTA c =crear_consulta();
+        }*/
+        CONSULTA c =crear_consulta();
         SQLRegistros mod=new SQLRegistros();
-        mod.guardarConsulta(trabajador.getId(), c);*/
+        if(trabajador!=null){
+            if(validarDatosConsulta()){
+                if(mod.guardarConsulta(trabajador.getId(), c)){
+                    showMessageDialog(null, "Guardado");
+                    borrarCampos();
+                }else{
+                    showMessageDialog(null, "falla al guardar");
+                }
+            
+            }else{
+                showMessageDialog(null, "Es necesario síntomas y diagnóstico");
+            }
+        }else{
+                showMessageDialog(null, "Es necesario insertar un empleado");
+            }
         
     }//GEN-LAST:event_jButton3ActionPerformed
 

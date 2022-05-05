@@ -195,6 +195,38 @@ public class SQLRegistros {
         
         return t;
     }
+    public boolean actualizar_empleado(TRABAJADOR p){
+        boolean regreso=false;
+        PreparedStatement ps = null;
+        String sql = "UPDATE personal_zurich.empleado SET"
+                + "\narea=?,telefono=?,estudios=?,estado_civil=?,activo=?,fecha_baja=?"
+                + "\nwhere id=?;";
+        try{
+            Connection con = PRINCIPAL.dataSource.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, p.getArea());
+            ps.setString(2, p.getTelefono());
+            ps.setString(3, p.getEscolaridad());
+            ps.setString(4, p.getEstadoCivil());
+            ps.setBoolean(5, p.isActivo());
+            if(!p.isActivo()){
+               ps.setString(6, fSal.format(p.getFechaBaja()));
+            }else{
+                ps.setNull(6, Types.VARCHAR);
+            }
+            ps.setInt(7, p.getId());
+            
+            ps.execute();
+            ps.close();
+            con.close();
+            regreso=true;
+        }catch(SQLException e){
+            System.out.println("actualizar_empleado " + sql);
+            System.out.println(e);
+            Logger.getLogger(SQLRegistros.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return regreso;
+    }
     
     public boolean guardar_datos_medicos(TRABAJADOR p){
         PreparedStatement ps = null;
@@ -377,7 +409,7 @@ public class SQLRegistros {
             //21-22
              ps.setInt(21, p.getQuirurgicas());
             if(p.getTransmitibles()!=0) ps.setString(22, p.getQuirurgicasObs());
-            else ps.setNull(23,Types.VARCHAR);
+            else ps.setNull(22,Types.VARCHAR);
             //23-24
             ps.setInt(23, p.getTransmitibles());
             if(p.getTransmitibles()!=0) ps.setString(24, p.getTransmitiblesObser());
