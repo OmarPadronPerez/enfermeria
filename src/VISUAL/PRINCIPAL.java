@@ -3,11 +3,12 @@ package VISUAL;
 import CLASES.CONSULTA;
 import CLASES.TRABAJADOR;
 import SQL.SQLRegistros;
-import java.time.LocalDateTime;
 import static javax.swing.JOptionPane.showMessageDialog;
 import org.apache.commons.dbcp2.BasicDataSource;
 import static auxiliar.auxiliares.calcularIMC;
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,9 +35,10 @@ public class PRINCIPAL extends javax.swing.JFrame {
             return false;
         }
     };
-
+    
     public PRINCIPAL() {
         initComponents();
+        
         this.getContentPane().setBackground( Color.WHITE );
         this.PlOGO.setBackgroung("IMAGENES/LOGOZURICH.png");       
         butBuscar.setBackgroung("IMAGENES/ICONOS/lupa.png");
@@ -49,6 +51,12 @@ public class PRINCIPAL extends javax.swing.JFrame {
         Calendar c2 = new GregorianCalendar();
         dcFecha_Consulta.setDate(c2.getTime());
     }
+    @Override
+        public Image getIconImage() {
+            Image retValue = Toolkit.getDefaultToolkit().
+            getImage(ClassLoader.getSystemResource("IMAGENES/logoEnfermeria.png"));
+            return retValue;
+        }
     
     public void crearTabla() {
         columnModel = jTable1.getColumnModel();
@@ -215,14 +223,10 @@ public class PRINCIPAL extends javax.swing.JFrame {
     
     public void llenarCampos(TRABAJADOR t){
         txtNombre.setText(t.getNombre()+" "+t.getApellido1()+" "+t.getApellido2());
-        //Date ahora=LocalDateTime.now().getYear();
-        int edad=-1900-t.getFecNaci().getYear()+LocalDateTime.now().getYear();
-        txtEdad.setText(String.valueOf(edad));
-        txtArea2.setText(t.getArea());
-        txtSexo.setText(t.getSexo());
-        
+        txtArea2.setText(t.getArea());        
         dcNacimiento.setDate(t.getFecNaci());
         txtLugNacimiento.setText(t.getLugNaci());
+        cbSexo.setSelectedItem(t.getSexo());
         txtTelefono.setText(t.getTelefono());
         cbEscolaridad.setSelectedItem(t.getEscolaridad());
         cbCivil.setSelectedItem(t.getEstadoCivil());
@@ -408,9 +412,7 @@ public class PRINCIPAL extends javax.swing.JFrame {
         txtNoEmpleado.setText("");
         trabajador=null;
         txtNombre.setText("-");
-        txtEdad.setText("-");
         txtArea2.setText("-");
-        txtSexo.setText("-");
         
         dcNacimiento.setDate(null);
         txtLugNacimiento.setText("");
@@ -763,17 +765,14 @@ public class PRINCIPAL extends javax.swing.JFrame {
         txtNoEmpleado = new javax.swing.JTextField();
         butBuscar = new IMAGENES.IMAGEN();
         txtNombre = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        txtEdad = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        txtSexo = new javax.swing.JLabel();
         txtArea2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
+        setIconImage(getIconImage());
         setResizable(false);
 
         jTitulo.setBackground(new java.awt.Color(255, 255, 255));
@@ -1230,7 +1229,7 @@ public class PRINCIPAL extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel28, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
                         .addGap(665, 665, 665))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1303,7 +1302,8 @@ public class PRINCIPAL extends javax.swing.JFrame {
                                     .addComponent(cbCivil, 0, 119, Short.MAX_VALUE)
                                     .addComponent(cbSexo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnGuardar))
+                                .addComponent(btnGuardar)
+                                .addGap(26, 26, 26))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel13)
@@ -1480,7 +1480,7 @@ public class PRINCIPAL extends javax.swing.JFrame {
                                                 .addComponent(jLabel45)
                                                 .addGap(26, 26, 26)))
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(txtFr, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+                                            .addComponent(txtFr)
                                             .addComponent(txtTalla))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -1503,7 +1503,7 @@ public class PRINCIPAL extends javax.swing.JFrame {
                                                 .addComponent(jLabel42)))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(txtIMC, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
+                                            .addComponent(txtIMC)
                                             .addComponent(txtpAbd)))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel37)
@@ -1867,7 +1867,7 @@ public class PRINCIPAL extends javax.swing.JFrame {
         );
         panel2Layout.setVerticalGroup(
             panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
         );
 
         jTabbedPane5.addTab("Información", panel2);
@@ -1888,12 +1888,6 @@ public class PRINCIPAL extends javax.swing.JFrame {
 
         txtNombre.setText("-");
 
-        jLabel1.setText("Edad");
-
-        txtEdad.setText("-");
-
-        jLabel3.setText("Sexo");
-
         jButton2.setText("Nuevo");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1905,8 +1899,6 @@ public class PRINCIPAL extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-
-        txtSexo.setText("-");
 
         txtArea2.setText("-");
 
@@ -1925,6 +1917,14 @@ public class PRINCIPAL extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTabbedPane5)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtArea2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel16)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -1934,23 +1934,7 @@ public class PRINCIPAL extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2))
-                    .addComponent(jTabbedPane5)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtArea2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(24, 24, 24)
-                        .addComponent(jLabel3)
-                        .addGap(16, 16, 16)
-                        .addComponent(txtSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jButton2)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -1971,10 +1955,6 @@ public class PRINCIPAL extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtNombre)
-                        .addComponent(jLabel1)
-                        .addComponent(txtEdad)
-                        .addComponent(jLabel3)
-                        .addComponent(txtSexo)
                         .addComponent(txtArea2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTabbedPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -2176,7 +2156,6 @@ public class PRINCIPAL extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -2198,7 +2177,6 @@ public class PRINCIPAL extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
@@ -2292,7 +2270,6 @@ public class PRINCIPAL extends javax.swing.JFrame {
     private javax.swing.JTextField txtDigestivas;
     private javax.swing.JTextField txtDigestivo;
     private javax.swing.JTextField txtDrogasTipo;
-    private javax.swing.JLabel txtEdad;
     private javax.swing.JTextArea txtExamenClinico;
     private javax.swing.JTextField txtFc;
     private javax.swing.JTextField txtFr;
@@ -2316,7 +2293,6 @@ public class PRINCIPAL extends javax.swing.JFrame {
     private javax.swing.JTextField txtRenales;
     private javax.swing.JTextField txtRespiratorias;
     private javax.swing.JTextField txtRespiratorio;
-    private javax.swing.JLabel txtSexo;
     private javax.swing.JTextField txtSexual;
     private javax.swing.JTextField txtSignos_vitales;
     private javax.swing.JTextArea txtSintomas;

@@ -362,7 +362,7 @@
                                                   </Group>
                                               </Group>
                                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                                  <Component id="txtFr" pref="53" max="32767" attributes="0"/>
+                                                  <Component id="txtFr" max="32767" attributes="0"/>
                                                   <Component id="txtTalla" max="32767" attributes="0"/>
                                               </Group>
                                               <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -391,7 +391,7 @@
                                               </Group>
                                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                  <Component id="txtIMC" pref="45" max="32767" attributes="0"/>
+                                                  <Component id="txtIMC" max="32767" attributes="0"/>
                                                   <Component id="txtpAbd" max="32767" attributes="0"/>
                                               </Group>
                                           </Group>

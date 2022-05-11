@@ -3,7 +3,6 @@ package VISUAL;
 import CLASES.TRABAJADOR;
 import SQL.SQLRegistros;
 import static auxiliar.auxiliares.calcularIMC;
-import java.util.Date;
 import javax.swing.JCheckBox;
 import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.JTextField;
@@ -190,8 +189,9 @@ public class NUEVOREGISTRO extends javax.swing.JFrame {
             }catch(NumberFormatException e){
                 error+="\ntelefono no valido";
             }
-            if(txtTelefono.getText().length()==10)
+            if(txtTelefono.getText().length()==11)
                 error+="\nTelefono a 10 digitos";
+            
             if(dcNacimiento.getDate()==null)
                 error+="\nFecha de nacimiento no valida";
             
