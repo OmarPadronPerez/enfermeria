@@ -226,6 +226,7 @@ public class PRINCIPAL extends javax.swing.JFrame {
         txtArea2.setText(t.getArea());        
         dcNacimiento.setDate(t.getFecNaci());
         txtLugNacimiento.setText(t.getLugNaci());
+        System.out.println(t.getSexo());
         cbSexo.setSelectedItem(t.getSexo());
         txtTelefono.setText(t.getTelefono());
         cbEscolaridad.setSelectedItem(t.getEscolaridad());
@@ -364,8 +365,16 @@ public class PRINCIPAL extends javax.swing.JFrame {
         txtFc.setText(String.valueOf(t.getFc()));
         txtpAbd.setText(String.valueOf(t.getpAbdominal()));
         txtSnellen.setText(t.getSnellen());
-        txtOi.setText(String.valueOf(t.getOi()));
-        txtOd.setText(String.valueOf(t.getOd()));
+        if(t.getOi()>=0)
+            txtOi.setText(String.valueOf(t.getOi()));
+        else
+            txtOi.setText("");
+        
+        if(t.getOd()>=0)
+            txtOd.setText(String.valueOf(t.getOd()));
+        else
+            txtOd.setText("");
+                
         //EXPLORACION FISICA
         txtCabello.setText(t.getPielCabello());
         txtOjos.setText(t.getOjosAnexos());
@@ -947,8 +956,13 @@ public class PRINCIPAL extends javax.swing.JFrame {
 
         jLabel7.setText("Sexo");
 
-        cbSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hombre", "Mujer" }));
+        cbSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "HOMBRE", "MUJER" }));
         cbSexo.setEnabled(false);
+        cbSexo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbSexoActionPerformed(evt);
+            }
+        });
 
         jLabel8.setText("Lugar de nacimiento");
 
@@ -2072,6 +2086,10 @@ public class PRINCIPAL extends javax.swing.JFrame {
             }
         
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void cbSexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbSexoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbSexoActionPerformed
 
     
     public static void main(String args[]) {
